@@ -8,19 +8,20 @@
 (enable-console-print!)
 
 ;; define your app data so that it doesn't get over-written on reload
-(defonce matches (atom []))
+(defonce matches (r/atom []))
 
-  (defonce requestmatches (go (let [response (<! (http/get "https://api.football-data.org/v2/competitions/CL/matches" {:with-credentials? false :headers {"X-Auth-Token" ""}}))]
+  (defonce requestmatches (go (let [response (<! (http/get "https://api.football-data.org/v2/competitions/PL/matches" {:with-credentials? false :headers {"X-Auth-Token" ""}}))]
     ;(prn (:matches (:body response)))
     (reset! matches (:matches (:body response))))))
 
 (defn match [match-data]
   (fn []
-    [:div
-    [:p
-     (get-in match-data [:homeTeam :name])
-     " - "
-     (get-in match-data [:awayTeam :name])]]))
+    [:div.match
+      [:div.home (get-in match-data [:homeTeam :name])]
+      [:div.score (get-in match-data [:score :fullTime :homeTeam]) " - " (get-in match-data [:score :fullTime :awayTeam])]
+      [:div.away (get-in match-data [:awayTeam :name])]
+      [:div.date (:utcDate match-data)]
+    ]))
 
 (defn matches-list []
   [:div
