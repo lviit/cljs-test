@@ -1,5 +1,8 @@
 (ns football-api.helpers
   (:require [goog.object :as obj]
-            ["styled-components" :default styled]))
+            ["framer-motion" :refer [motion]]
+            ["styled-components" :default styled-components]))
 
-(defn Styled [element styles] ((obj/get styled element) (clj->js styles)))
+(defn animated [element] (obj/get motion element))
+
+(defn styled [element styles] ((obj/get styled-components element) (clj->js styles)))
