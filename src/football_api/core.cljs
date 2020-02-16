@@ -3,6 +3,7 @@
   (:require [reagent.core :as r]
             [cljs-http.client :as http]
             [cljs.core.async :refer [<!]]
+            ["framer-motion" :refer [AnimatePresence]]
             [football-api.helpers :refer [Styled]]))
             ;;[cljss.core :refer [defstyles]]))
 
@@ -15,16 +16,23 @@
   ;(prn (:matches (:body response)))
                               (reset! matches (:matches (:body response))))))
 
-(def Container (Styled "div" {:color "red"
-                              :background-color "green"}))
+(def Container (Styled "div" {:font-family "'Rubik', sans-serif"
+                              :font-size "20px"
+                              :display "flex"
+                              :padding "10px"
+                              :margin "30px"
+                              :box-shadow "0 7px 20px 0 rgba(12,38,69,0.2)"}))
 
-(defn match [match-data]
+(def Score (Styled "div" {:margin "0 5px"
+                          :font-weight "600"}))
+
+(defn match [{:keys [homeTeam awayTeam utcDate score]}]
   (fn []
     [:> Container
-     [:div.home (get-in match-data [:homeTeam :name])]
-     [:div.score (get-in match-data [:score :fullTime :homeTeam]) " - " (get-in match-data [:score :fullTime :awayTeam])]
-     [:div.away (get-in match-data [:awayTeam :name])]
-     [:div.date (:utcDate match-data)]]))
+     [:div.home (homeTeam :name)]
+     [:> Score (get-in score [:fullTime :homeTeam]) " - " (get-in score [:fullTime :awayTeam])]
+     [:div.away (awayTeam :name)]
+     [:div.date utcDate]]))
 
 (defn matches-list []
   [:div

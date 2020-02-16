@@ -1,5 +1,5 @@
 (ns football-api.helpers
-  (:require [goog.object]
+  (:require [goog.object :as obj]
             ["styled-components" :default styled]))
 
-(defn Styled [element styles] ((goog.object/get styled element) (clj->js styles)))
+(defn Styled [element styles] ((obj/get styled element) (clj->js styles)))
