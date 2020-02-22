@@ -4,6 +4,7 @@
    [football-api.helpers :refer [styled]]))
 
 (def container (styled "div" {:font-size "20px"
+                              :font-weight "700"
                               :letter-spacing "1px"
                               :display "flex"
                               :padding "10px"
@@ -14,10 +15,9 @@
                           :font-weight "600"}))
 
 (defn match [{:keys [homeTeam awayTeam utcDate score]}]
-  (fn []
-    [:> container
-     [:div (homeTeam :name)]
-     [:> Score (get-in score [:fullTime :homeTeam]) " - " (get-in score [:fullTime :awayTeam])]
-     [:div (awayTeam :name)]
-     [:div (-> utcDate parseISO (format "HH:mm"))]
-     [:div (-> utcDate parseISO (format "dd.MM.yyyy"))]]))
+  [:> container
+   [:div (homeTeam :name)]
+   [:> Score (get-in score [:fullTime :homeTeam]) " - " (get-in score [:fullTime :awayTeam])]
+   [:div (awayTeam :name)]
+   [:div (-> utcDate parseISO (format "HH:mm"))]
+   [:div (-> utcDate parseISO (format "dd.MM.yyyy"))]])

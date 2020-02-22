@@ -4,9 +4,8 @@
             [cljs-http.client :as http]
             [cljs.core.async :refer [<!]]
             [football-api.components.match :refer [match]]
+            [football-api.components.page :refer [page]]
             [football-api.helpers :refer [styled animated]]))
-
-(enable-console-print!)
 
 ;; define your app data so that it doesn't get over-written on reload
 (defonce matches (r/atom []))
@@ -15,18 +14,20 @@
   ;(prn (:matches (:body response)))
                               (reset! matches (:matches (:body response))))))
 
-(def app (styled "div" {:font-family "'Rubik', sans-serif"}))
+(def app (styled "div" {:font-family "'Noto Sans', sans-serif"}))
 
 (defn matches-list []
   [:> app
-   (for [match-data @matches]
-     ^{:key (:id match-data)} [:> (animated "div")
-                               [match match-data]])])
+   [page {:title "Football api cljs"}
+    (for [match-data @matches]
+      ^{:key (:id match-data)} [:> (animated "div")
+                                [match match-data]])]])
+
 
 (defn ^:dev/after-load start
   []
   (r/render [matches-list]
-    (.getElementById js/document "root")))
+            (.getElementById js/document "root")))
 
 (defn ^:export init
   []
