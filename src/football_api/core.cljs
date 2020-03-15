@@ -17,11 +17,12 @@
 (def app (styled "div" {:font-family "'Noto Sans', sans-serif"}))
 
 (defn matches-list []
-  [:> app
-   [page {:title "Matches"}
-    (for [match-data @matches]
-      ^{:key (:id match-data)} [:> (animated "div")
-                                [match match-data]])]])
+  (let [matches @(rf/subscribe [:matches])]
+    [:> app
+     [page {:title "Matches"}
+      (for [match-data matches]
+        ^{:key (:id match-data)} [:> (animated "div")
+                                  [match match-data]])]]))
 
 (defn standings-list []
   [:> app
@@ -39,5 +40,5 @@
   []
   (rf/dispatch-sync [:init-db])
   (rf/dispatch [:get-competitions])
-  (rf/dispatch [:get-matches])
+  (rf/dispatch [:set-active-competition "PL"])
   (start))

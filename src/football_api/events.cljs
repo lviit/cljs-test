@@ -30,9 +30,9 @@
 
 (reg-event-fx
  :get-matches
- (fn [{:keys [db]} _]
+ (fn [{:keys [db]} [_ competition]]
    {:db  (assoc db :loading true)
-    :http-xhrio (merge default-options {:uri        (str api-base-url "competitions/PL/matches")
+    :http-xhrio (merge default-options {:uri        (str api-base-url "competitions/" competition "/matches")
                                         :on-success [:get-matches-success]})}))
 
 (reg-event-db
@@ -47,11 +47,12 @@
  (fn [{:keys [db]} _]
    {:db  (assoc db :loading true)
     :http-xhrio (merge default-options {:uri        (str api-base-url "competitions")
+                                        :url-params {:plan "TIER_ONE"}
                                         :on-success [:get-competitions-success]})}))
 
-(reg-event-db
+(reg-event-fx
  :set-active-competition
- (fn [db [_ active-competition]]
-   (-> db
-       (assoc :active-competition active-competition))))
+ (fn [{:keys [db]} [_ active-competition]]
+   {:db (assoc db :active-competition active-competition)
+    :dispatch [:get-matches active-competition]}))
 

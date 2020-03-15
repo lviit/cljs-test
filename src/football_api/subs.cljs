@@ -2,6 +2,11 @@
   (:require [re-frame.core :refer [reg-sub]]))
 
 (reg-sub
+ :matches
+ (fn [db _]
+   (db :matches)))
+
+(reg-sub
  :competitions
  (fn [db _]
    (db :competitions)))
