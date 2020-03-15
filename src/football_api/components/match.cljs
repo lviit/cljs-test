@@ -1,7 +1,7 @@
 (ns football-api.components.match
   (:require
    ["date-fns" :refer [format parseISO]]
-   [football-api.helpers :refer [styled]]))
+   [football-api.helpers :refer [styled formatTime formatDate]]))
 
 (def container (styled "div" {:font-size "20px"
                               :font-weight "700"
@@ -19,5 +19,5 @@
    [:div (homeTeam :name)]
    [:> Score (get-in score [:fullTime :homeTeam]) " - " (get-in score [:fullTime :awayTeam])]
    [:div (awayTeam :name)]
-   [:div (-> utcDate parseISO (format "HH:mm"))]
-   [:div (-> utcDate parseISO (format "dd.MM.yyyy"))]])
+   [:div (formatTime utcDate)]
+   [:div (formatDate utcDate)]])
