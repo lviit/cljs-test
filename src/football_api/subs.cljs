@@ -5,3 +5,8 @@
  :competitions
  (fn [db _]
    (db :competitions)))
+
+(reg-sub
+ :active-competition
+ (fn [db _]
+   (db :active-competition)))

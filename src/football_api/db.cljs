@@ -4,6 +4,7 @@
 (def initial-db {:matches []
                  :standings []
                  :competitions []
+                 :active-competition "PL"
                  :loading false})
 
 (rf/reg-event-db

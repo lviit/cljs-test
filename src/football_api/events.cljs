@@ -33,7 +33,7 @@
  (fn [{:keys [db]} _]
    {:db  (assoc db :loading true)
     :http-xhrio (merge default-options {:uri        (str api-base-url "competitions/PL/matches")
-                                        :on-success [:get-matches-success] })}))
+                                        :on-success [:get-matches-success]})}))
 
 (reg-event-db
  :get-competitions-success
@@ -48,3 +48,10 @@
    {:db  (assoc db :loading true)
     :http-xhrio (merge default-options {:uri        (str api-base-url "competitions")
                                         :on-success [:get-competitions-success]})}))
+
+(reg-event-db
+ :set-active-competition
+ (fn [db [_ active-competition]]
+   (-> db
+       (assoc :active-competition active-competition))))
+
