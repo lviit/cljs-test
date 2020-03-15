@@ -3,6 +3,7 @@
   (:require [reagent.core :as r]
             [re-frame.core :as rf]
             [football-api.db]
+            [football-api.subs]
             [football-api.events]
             [football-api.components.match :refer [match]]
             [football-api.components.page :refer [page]]
