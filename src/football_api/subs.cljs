@@ -7,6 +7,11 @@
    (db :matches)))
 
 (reg-sub
+ :matches-loading
+ (fn [db _]
+   (db :matches-loading)))
+
+(reg-sub
  :competitions
  (fn [db _]
    (db :competitions)))

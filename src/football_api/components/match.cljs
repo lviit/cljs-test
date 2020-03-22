@@ -1,23 +1,24 @@
 (ns football-api.components.match
   (:require
    ["date-fns" :refer [format parseISO]]
-   [football-api.helpers :refer [styled formatTime formatDate]]))
+   [cljs-styled-components.reagent :refer [defstyled]]
+   [football-api.helpers :refer [formatTime formatDate]]))
 
-(def container (styled "div" {:font-size "20px"
-                              :font-weight "700"
-                              :letter-spacing "1px"
-                              :display "flex"
-                              :padding "10px"
-                              :margin "30px"
-                              :box-shadow "0 7px 20px 0 rgba(12,38,69,0.2)"}))
+(defstyled container :div {:font-size "20px"
+                           :font-weight "700"
+                           :letter-spacing "1px"
+                           :display "flex"
+                           :padding "10px"
+                           :margin "30px"
+                           :box-shadow "0 7px 20px 0 rgba(12,38,69,0.2)"})
 
-(def Score (styled "div" {:margin "0 5px"
-                          :font-weight "600"}))
+(defstyled styled-score :div {:margin "0 5px"
+                              :font-weight "600"})
 
 (defn match [{:keys [homeTeam awayTeam utcDate score]}]
-  [:> container
+  [container
    [:div (homeTeam :name)]
-   [:> Score (get-in score [:fullTime :homeTeam]) " - " (get-in score [:fullTime :awayTeam])]
+   [styled-score (str (get-in score [:fullTime :homeTeam]) " - " (get-in score [:fullTime :awayTeam]))]
    [:div (awayTeam :name)]
    [:div (formatTime utcDate)]
    [:div (formatDate utcDate)]])
