@@ -4,18 +4,23 @@
    [football-api.components.select-competition :refer [select-competition]]
    [cljs-styled-components.reagent :refer [defstyled]]))
 
-(defstyled container :div {:text-align "center"
-                              :text-transform "uppercase"})
+(defstyled header :div {:display "flex"
+                        :justify-content "space-between"
+                        :align-items "center"
+                        :text-transform "uppercase"})
+
+(defstyled styled-title :h1 {:font-size "70px"
+                             :margin "0"})
+
 
 (defn page [{:keys [title]} & children]
   (let  [competitions @(rf/subscribe [:competitions])
          active-competition @(rf/subscribe [:active-competition])]
-    [container
-     [:div.header
-      [:h1 title]
-      [:p (->> competitions
-               (filter #(= (:code %) active-competition))
-               first
-               )]
+    [:div
+     [header
+      [styled-title (as-> competitions comp
+                      (filter #(= (:code %) active-competition) comp)
+                      (first comp)
+                      (get comp :name))]
       [select-competition]]
      [:div.content children]]))
