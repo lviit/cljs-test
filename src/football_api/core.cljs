@@ -9,9 +9,7 @@
             [football-api.components.match :refer [match]]
             [football-api.components.page :refer [page]]
             [football-api.components.loading-spinner :refer [loading-spinner]]
-            [football-api.helpers :refer [animated]]))
-
-(defonce standings (r/atom []))
+            [football-api.helpers :refer [animated formatDate]]))
 
 (defglobalstyle
   global-styles
@@ -24,15 +22,16 @@
      [global-styles]
      (if matches-loading [loading-spinner])
      [page {:title "Matches"}
-      (for [match-data matches]
-        ^{:key (:id match-data)} [:> (animated "div")
-                                  [match match-data]])]]))
-
-(defn standings-list []
-  [page {:title "Standings"}
-   (for [standings-data @standings]
-     ^{:key (:id standings-data)} [:> (animated "div")
-                                   [[:div "pling!"] standings-data]])])
+      (as-> matches m
+        (filter #(= (:matchday %) 1) m)
+        (group-by #(formatDate (get % :utcDate)) m)
+        (seq m)
+        (for [[date matches-for-date] m]
+          ^{:key date} [:div
+                        [:h2 date]
+                        (for [match-data matches-for-date]
+                          ^{:key (:id match-data)} [:> (animated "div")
+                                                    [match match-data]])]))]]))
 
 (defn ^:dev/after-load start
   []
