@@ -6,8 +6,8 @@
    [football-api.components.loading-spinner :refer [loading-spinner]]
    [football-api.components.match :refer [match]]))
 
-(defstyled group-title :h2 {:margin "0 20px"})
-
+(defstyled group-title :h2 {:margin "20px 20px 0"
+                            :font-size "18px"})
 
 (defn matches-list []
   (let [matches @(rf/subscribe [:matches])

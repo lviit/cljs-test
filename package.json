@@ -1,11 +1,11 @@
 {
-  "name": "cljs-test",
+  "name": "cljs-football-data",
   "version": "0.0.1",
-  "description": "Football api test",
+  "description": "Cljs Football data",
   "private": true,
   "repository": {
     "type": "git",
-    "url": "https://github.com/lviit/cljs-test"
+    "url": "https://github.com/lviit/cljs-football-data"
   },
   "scripts": {
     "dev": "shadow-cljs watch app",
@@ -23,7 +23,6 @@
     "styled-components": "^4.4.1"
   },
   "devDependencies": {
-    "react-flip-move": "^3.0.2",
     "react-highlight.js": "^1.0.7",
     "shadow-cljs": "2.7.25"
   }

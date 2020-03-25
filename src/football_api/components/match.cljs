@@ -10,9 +10,9 @@
                            :align-items "center"
                            :padding "0 20px"
                            :margin "10px 0"
-                           :box-shadow "0 0 10px 0 rgba(12,38,69,0.1)"})
+                           :background-color "#f7f7f7"})
 
-(defstyled styled-score :div {:background-color "#f2f2f2"
+(defstyled styled-score :div {:background-color "#eae8e8"
                               :padding "10px 15px"
                               :margin "0 10px"})
 
@@ -20,10 +20,11 @@
                               :align-items "center"
                               :flex-grow 1})
 
-(defstyled home-team :div {:flex "0 1 43%"
+(defstyled home-team :div {:flex "0 1 calc(50% - 85px)"
                            :text-align "right"})
 
-(defstyled styled-time :div {:font-size "16px"})
+(defstyled styled-time :div {:font-size "16px"
+                             :font-weight 400})
 
 (defn match [{:keys [homeTeam awayTeam utcDate score]}]
   [container

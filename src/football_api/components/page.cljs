@@ -8,7 +8,8 @@
 (defstyled header :div {:display "flex"
                         :justify-content "space-between"
                         :align-items "center"
-                        :text-transform "uppercase"})
+                        :text-transform "uppercase"
+                        :margin "20px"})
 
 (defstyled styled-title :h1 {:font-size "70px"
                              :margin "0"})
@@ -19,6 +20,6 @@
     [:div
      [header
       [styled-title (get active-competition :name)]
-      [pager]
       [select-competition]]
+     [pager]
      [:div.content children]]))

@@ -10,7 +10,8 @@
 
 (defglobalstyle
   global-styles
-  {"body" {:font-family "'Noto Sans', sans-serif"}})
+  {"body" {:font-family "'Noto Sans', sans-serif"
+           :color "#383838"}})
 
 (defn app []
   [:div
