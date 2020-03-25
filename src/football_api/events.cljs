@@ -41,7 +41,6 @@
    (-> db
        (assoc :competitions-loading false))))
 
-
 (reg-event-db
  :get-competitions-success
  (fn [db [_ response]]
@@ -62,5 +61,13 @@
  :set-active-competition
  (fn [{:keys [db]} [_ active-competition]]
    {:db (assoc db :active-competition active-competition)
-    :dispatch [:get-matches active-competition]}))
+    :dispatch-n (list [:get-matches active-competition]
+                      [:set-active-matchday (as-> (get db :competitions) comp
+                                              (filter #(= (:code %) active-competition) comp)
+                                              (first comp)
+                                              (get-in comp [:currentSeason :currentMatchday]))])}))
 
+(reg-event-db
+ :set-active-matchday
+ (fn [db [_ matchday]]
+   (assoc db :active-matchday matchday)))

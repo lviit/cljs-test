@@ -17,13 +17,14 @@
 
 (defn matches-list []
   (let [matches @(rf/subscribe [:matches])
-        matches-loading @(rf/subscribe [:matches-loading])]
+        matches-loading @(rf/subscribe [:matches-loading])
+        active-matchday @(rf/subscribe [:active-matchday])]
     [:div
      [global-styles]
      (if matches-loading [loading-spinner])
      [page {:title "Matches"}
       (as-> matches m
-        (filter #(= (:matchday %) 1) m)
+        (filter #(= (:matchday %) active-matchday) m)
         (group-by #(formatDate (get % :utcDate)) m)
         (seq m)
         (for [[date matches-for-date] m]

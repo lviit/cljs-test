@@ -20,3 +20,15 @@
  :active-competition
  (fn [db _]
    (db :active-competition)))
+
+(reg-sub
+ :active-competition-data
+ (fn [db _]
+   (->> (db :competitions)
+        (filter #(= (:code %) (db :active-competition)))
+        first)))
+
+(reg-sub
+ :active-matchday
+ (fn [db _]
+   (db :active-matchday)))
