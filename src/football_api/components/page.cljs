@@ -13,8 +13,7 @@
 (defstyled styled-title :h1 {:font-size "70px"
                              :margin "0"})
 
-
-(defn page [{:keys [title]} & children]
+(defn page [children]
   (let  [competitions @(rf/subscribe [:competitions])
          active-competition @(rf/subscribe [:active-competition-data])]
     [:div
