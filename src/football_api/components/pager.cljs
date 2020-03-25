@@ -4,8 +4,8 @@
    [cljs-styled-components.reagent :refer [defstyled]]))
 
 (defstyled container :div {:display "flex"
-                        :justify-content "space-between"
-                        :align-items "center"})
+                           :justify-content "space-between"
+                           :align-items "center"})
 
 (defn pager []
   (let  [active-matchday @(rf/subscribe [:active-matchday])
@@ -13,6 +13,8 @@
                            last
                            (get :matchday))]
     [container
-     [:button {:on-click #(rf/dispatch [:set-active-matchday (- active-matchday 1)])} "prev"]
+     [:button {:on-click #(rf/dispatch [:set-active-matchday (- active-matchday 1)])
+               :disabled (= active-matchday 1)} "prev"]
      [:span (str "gameweek " active-matchday)]
-     [:button {:on-click #(rf/dispatch [:set-active-matchday (+ active-matchday 1)])} "next"]]))
+     [:button {:on-click #(rf/dispatch [:set-active-matchday (+ active-matchday 1)])
+               :disabled (= active-matchday last-matchday)} "next"]]))
