@@ -2,7 +2,7 @@
   (:require
    [ajax.core :as ajax]
    [day8.re-frame.http-fx]
-   [re-frame.core :refer [reg-event-fx reg-event-db]]))
+   [re-frame.core :refer [reg-event-fx reg-event-db reg-fx dispatch]]))
 
 ;; read from env variable FOOTBALL_API_AUTH_TOKEN
 (goog-define api-auth-token "123456789")
@@ -65,7 +65,20 @@
                       [:set-active-matchday (as-> (get db :competitions) comp
                                               (filter #(= (:code %) active-competition) comp)
                                               (first comp)
-                                              (get-in comp [:currentSeason :currentMatchday]))])}))
+                                              (get-in comp [:currentSeason :currentMatchday]))])
+    :poll-matches  {:updater (get db :matches-updater)
+                    :active-competition active-competition}}))
+
+(reg-fx
+ :poll-matches
+ (fn [{:keys [updater active-competition]}]
+   (js/clearInterval updater)
+   (dispatch [:set-matches-updater (js/setInterval #(dispatch [:get-matches active-competition]) 60000)])))
+
+(reg-event-db
+ :set-matches-updater
+ (fn [db [_ id]]
+   (assoc db :matches-updater id)))
 
 (reg-event-db
  :set-active-matchday
