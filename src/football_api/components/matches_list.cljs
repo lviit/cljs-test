@@ -9,6 +9,11 @@
 (defstyled group-title :h2 {:margin "20px 20px 0"
                             :font-size "18px"})
 
+(defn animated-ul [children] [:> (animated :ul) {:initial "closed"
+                                                 :animate "open"
+                                                 :variants {:open {:transition {:stagger-children 0.05}}}}
+                              children])
+
 (defn matches-list []
   (let [matches @(rf/subscribe [:matches])
         matches-loading @(rf/subscribe [:matches-loading])
@@ -22,6 +27,7 @@
        (for [[date matches-for-date] m]
          ^{:key date} [:div
                        [group-title date]
-                       (for [match-data matches-for-date]
-                         ^{:key (:id match-data)} [:> (animated "div")
-                                                   [match match-data]])]))]))
+                       [animated-ul
+                        (for [match-data matches-for-date]
+                          ^{:key (:id match-data) :i (:id match-data)}
+                          [match match-data])]]))]))
