@@ -11,6 +11,7 @@
 (def styled-text (styled :div {:font-weight "600"
                                :margin "0 10px"
                                :align-items "center"
+                               :text-transform "uppercase"
                                :font-size "20px"}))
 
 (def styled-button (styled :button {:font-weight "600"
@@ -19,7 +20,8 @@
                                     :background-color "#eae8e8"
                                     :text-transform "uppercase"
                                     :border "none"
-                                    :cursor "pointer"}))
+                                    :cursor "pointer"
+                                    :color "#383838"}))
 
 (defn pager []
   (let  [active-matchday @(rf/subscribe [:active-matchday])

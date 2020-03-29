@@ -25,7 +25,9 @@
 (def styled-time (styled :div {:font-size "16px"
                                :font-weight 400}))
 
-(defn match [{:keys [homeTeam awayTeam utcDate score]}]
+(defn match [{:keys [homeTeam awayTeam utcDate]
+              {{home-team-score :homeTeam
+                away-team-score :awayTeam} :fullTime} :score}]
   [:> styled-container {:variants {:open {:y 0
                                           :opacity 1
                                           :transition {:y {:stiffness 1000
@@ -37,5 +39,5 @@
    [:> styled-time (formatTime utcDate)]
    [:> styled-match
     [:> styled-home-team (homeTeam :name)]
-    [:> styled-score (get-in score [:fullTime :homeTeam])] " - " [:> styled-score (get-in score [:fullTime :awayTeam])]
+    [:> styled-score (or home-team-score "-")] " - " [:> styled-score (or away-team-score "-")]
     [:div (awayTeam :name)]]])

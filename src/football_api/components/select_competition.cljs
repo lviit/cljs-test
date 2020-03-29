@@ -3,12 +3,16 @@
    [re-frame.core :as rf]
    [football-api.helpers :refer [styled]]))
 
-(def styled-select (styled :select {:font-size "16px"
-                                    :background-color "#eee"
+(def styled-select (styled :select {:font-size "20px"
+                                    :background-color "#eae8e8"
                                     :appearance "none"
                                     :padding "5px 10px"
                                     :border "none"
-                                    :border-radius 0}))
+                                    :border-radius 0
+                                    :font-family "'Noto Sans', sans-serif"
+                                    :font-weight "600"
+                                    :color "#383838"
+                                    :cursor "pointer"}))
 
 (defn select-competition []
   (let  [competitions @(rf/subscribe [:competitions])
