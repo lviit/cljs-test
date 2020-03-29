@@ -1,18 +1,15 @@
 (ns football-api.components.matches-list
   (:require
    [re-frame.core :as rf]
-   [cljs-styled-components.reagent :refer [defstyled]]
-   [football-api.helpers :refer [animated formatDate]]
+   [football-api.helpers :refer [animated styled formatDate]]
    [football-api.components.loading-spinner :refer [loading-spinner]]
    [football-api.components.match :refer [match]]))
 
-(defstyled group-title :h2 {:margin "20px 20px 0"
-                            :font-size "18px"})
+(def styled-ul (styled (animated :ul) {:list-style-type "none"
+                                       :padding 0}))
 
-(defn animated-ul [children] [:> (animated :ul) {:initial "closed"
-                                                 :animate "open"
-                                                 :variants {:open {:transition {:stagger-children 0.05}}}}
-                              children])
+(def styled-title (styled :h2 {:margin "20px 20px 0"
+                                :font-size "18px"}))
 
 (defn matches-list []
   (let [matches @(rf/subscribe [:matches])
@@ -26,8 +23,10 @@
        (seq m)
        (for [[date matches-for-date] m]
          ^{:key date} [:div
-                       [group-title date]
-                       [animated-ul
+                       [:> styled-title date]
+                       [:> styled-ul {:initial "closed"
+                                      :animate "open"
+                                      :variants {:open {:transition {:stagger-children 0.05}}}}
                         (for [match-data matches-for-date]
                           ^{:key (:id match-data) :i (:id match-data)}
                           [match match-data])]]))]))
