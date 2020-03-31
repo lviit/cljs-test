@@ -32,3 +32,15 @@
  :active-matchday
  (fn [db _]
    (db :active-matchday)))
+
+(reg-sub
+ :active-match-details
+ (fn [db _]
+   (db :active-match-details)))
+
+(reg-sub
+ :active-match-data
+ (fn [db _]
+   (->> (db :matches)
+        (filter #(= (:id %) (db :active-match-details)))
+        first)))

@@ -24,9 +24,9 @@
        (for [[date matches-for-date] m]
          ^{:key date} [:div
                        [:> styled-title date]
-                       [:> styled-ul {:initial "closed"
-                                      :animate "open"
-                                      :variants {:open {:transition {:stagger-children 0.05}}}}
+                       [:> styled-ul {:initial :hidden
+                                      :animate :visible
+                                      :variants {:visible {:transition {:stagger-children 0.05}}}}
                         (for [match-data matches-for-date]
                           ^{:key (:id match-data) :i (:id match-data)}
                           [match match-data])]]))]))

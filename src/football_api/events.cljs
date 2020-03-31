@@ -10,7 +10,7 @@
 (def api-base-url "https://api.football-data.org/v2/")
 
 (def default-options {:method          :get
-                      :headers         {"X-Auth-Token" "f6298db6c5cc49879444befb31485cf6"}
+                      :headers         {"X-Auth-Token" api-auth-token}
                       :format          (ajax/json-request-format)
                       :response-format (ajax/json-response-format {:keywords? true})})
 
@@ -84,3 +84,8 @@
  :set-active-matchday
  (fn [db [_ matchday]]
    (assoc db :active-matchday matchday)))
+
+(reg-event-db
+ :set-active-match-details
+ (fn [db [_ id]]
+   (assoc db :active-match-details id)))

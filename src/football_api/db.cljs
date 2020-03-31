@@ -7,7 +7,8 @@
                  :standings []
                  :competitions []
                  :active-competition ""
-                 :active-matchday 1})
+                 :active-matchday 1
+                 :active-match-details nil})
 
 (rf/reg-event-db
  :init-db

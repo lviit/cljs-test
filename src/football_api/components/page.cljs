@@ -2,8 +2,10 @@
   (:require
    [re-frame.core :as rf]
    [football-api.components.select-competition :refer [select-competition]]
+   [football-api.components.match-details :refer [match-details]]
    [football-api.components.pager :refer [pager]]
-   [football-api.helpers :refer [styled]]))
+   [football-api.helpers :refer [styled]]
+   ["framer-motion" :rename {AnimatePresence animate-presence}]))
 
 (def styled-header (styled :div {:display "flex"
                                  :justify-content "space-between"
@@ -14,11 +16,13 @@
 (def styled-title (styled :h1 {:font-size "70px"
                                :margin "0"}))
 
-
 (defn page [children]
   (let  [competitions @(rf/subscribe [:competitions])
-         active-competition @(rf/subscribe [:active-competition-data])]
+         active-competition @(rf/subscribe [:active-competition-data])
+         active-match-data @(rf/subscribe [:active-match-data])]
     [:div
+     [:> animate-presence
+      (if active-match-data [match-details active-match-data])]
      [:> styled-header
       [:> styled-title (get active-competition :name)]
       [select-competition]]
