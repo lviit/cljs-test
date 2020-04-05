@@ -8,12 +8,13 @@
 ;; read from env variable FOOTBALL_API_AUTH_TOKEN
 (goog-define api-auth-token "123456789")
 
+(def default-competition "PL")
+(def plan "TIER_ONE")
 (def api-base-url "https://api.football-data.org/v2/")
-
-(def default-options {:method          :get
-                      :headers         {"X-Auth-Token" api-auth-token}
-                      :format          (ajax/json-request-format)
-                      :response-format (ajax/json-response-format {:keywords? true})})
+(def default-req-options {:method          :get
+                          :headers         {"X-Auth-Token" api-auth-token}
+                          :format          (ajax/json-request-format)
+                          :response-format (ajax/json-response-format {:keywords? true})})
 
 (reg-event-fx
  :init
@@ -38,9 +39,9 @@
  :get-matches
  (fn [{:keys [db]} [_ competition]]
    {:db  (assoc db :matches-loading true)
-    :http-xhrio (merge default-options {:uri        (str api-base-url "competitions/" competition "/matches")
-                                        :on-success [:get-matches-success]
-                                        :on-failure [:get-matches-failure]})}))
+    :http-xhrio (merge default-req-options {:uri        (str api-base-url "competitions/" competition "/matches")
+                                            :on-success [:get-matches-success]
+                                            :on-failure [:get-matches-failure]})}))
 
 (reg-event-db
  :get-competitions-failure
@@ -54,16 +55,16 @@
    {:db (-> db
             (assoc :competitions-loading false)
             (assoc :competitions ((js->clj response) :competitions)))
-    :dispatch [:set-active-competition "PL"]}))
+    :dispatch [:set-active-competition default-competition]}))
 
 (reg-event-fx
  :get-competitions
  (fn [{:keys [db]} _]
    {:db  (assoc db :competitions-loading true)
-    :http-xhrio (merge default-options {:uri        (str api-base-url "competitions")
-                                        :url-params {:plan "TIER_ONE"}
-                                        :on-success [:get-competitions-success]
-                                        :on-failure [:get-competitions-failure]})}))
+    :http-xhrio (merge default-req-options {:uri        (str api-base-url "competitions")
+                                            :url-params {:plan plan}
+                                            :on-success [:get-competitions-success]
+                                            :on-failure [:get-competitions-failure]})}))
 
 (reg-event-fx
  :set-active-competition
