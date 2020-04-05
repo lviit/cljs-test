@@ -19,9 +19,8 @@
                                                :width "300px"
                                                :height "300px"
                                                :position "absolute"
-                                               :top "50%"
-                                               :left "50%"
-                                               :transform "translate(-50%, -50%)"}))
+                                               :top "calc(50% - 150px)"
+                                               :left "calc(50% - 150px)"}))
 
 (def styled-score (styled :div {:background-color "#eae8e8"
                                 :padding "10px 15px"
@@ -35,9 +34,11 @@
                         away-team-score :awayTeam} :fullTime} :score}]
   [:> styled-overlay {:on-click #(rf/dispatch [:set-active-match-details nil])}
    [:> styled-container {:key "match-details"
-                         :initial {:opacity 0}
-                         :animate {:opacity 1}
-                         :exit {:opacity 0}}
+                         :initial :closed
+                         :animate :open
+                         :exit :closed
+                         :variants {:closed {:opacity 0 :scale 0}
+                                    :open {:opacity 1 :scale 1}}}
     [:> styled-time (formatTime utcDate)]
     [:div
      [:div (homeTeam :name)]

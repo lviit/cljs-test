@@ -13,18 +13,22 @@
                                  :text-transform "uppercase"
                                  :margin "20px"}))
 
+(def styled-container (styled :div {:filter #(if (get (js->clj %) "blurred") "blur(10px)" "none")}))
+
 (def styled-title (styled :h1 {:font-size "70px"
                                :margin "0"}))
 
 (defn page [children]
   (let  [competitions @(rf/subscribe [:competitions])
          active-competition @(rf/subscribe [:active-competition-data])
-         active-match-data @(rf/subscribe [:active-match-data])]
+         active-match-data @(rf/subscribe [:active-match-data])
+         match-details-open (boolean active-match-data)]
     [:div
      [:> animate-presence
-      (if active-match-data [match-details active-match-data])]
-     [:> styled-header
-      [:> styled-title (get active-competition :name)]
-      [select-competition]]
-     [pager]
-     [:div.content children]]))
+      (if match-details-open [match-details active-match-data])]
+     [:> styled-container {:blurred match-details-open}
+      [:> styled-header
+       [:> styled-title (get active-competition :name)]
+       [select-competition]]
+      [pager]
+      [:div children]]]))
