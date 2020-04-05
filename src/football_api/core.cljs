@@ -23,7 +23,5 @@
 
 (defn ^:export init
   []
-  (rf/dispatch-sync [:init-db])
-  (rf/dispatch [:get-competitions])
-  (rf/dispatch [:set-active-competition "PL"])
+  (rf/dispatch-sync [:init])
   (start))

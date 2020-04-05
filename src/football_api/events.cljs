@@ -2,6 +2,7 @@
   (:require
    [ajax.core :as ajax]
    [day8.re-frame.http-fx]
+   [football-api.db :refer [initial-db]]
    [re-frame.core :refer [reg-event-fx reg-event-db reg-fx dispatch]]))
 
 ;; read from env variable FOOTBALL_API_AUTH_TOKEN
@@ -13,6 +14,12 @@
                       :headers         {"X-Auth-Token" api-auth-token}
                       :format          (ajax/json-request-format)
                       :response-format (ajax/json-response-format {:keywords? true})})
+
+(reg-event-fx
+ :init
+ (fn [_ _]
+   {:db initial-db
+    :dispatch [:get-competitions]}))
 
 (reg-event-db
  :get-matches-failure
@@ -41,12 +48,13 @@
    (-> db
        (assoc :competitions-loading false))))
 
-(reg-event-db
+(reg-event-fx
  :get-competitions-success
- (fn [db [_ response]]
-   (-> db
-       (assoc :competitions-loading false)
-       (assoc :competitions ((js->clj response) :competitions)))))
+ (fn [{:keys [db]} [_ response]]
+   {:db (-> db
+            (assoc :competitions-loading false)
+            (assoc :competitions ((js->clj response) :competitions)))
+    :dispatch [:set-active-competition "PL"]}))
 
 (reg-event-fx
  :get-competitions

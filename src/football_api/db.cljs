@@ -1,5 +1,5 @@
 (ns football-api.db
-  (:require [re-frame.core :as rf]))
+  (:require [re-frame.core :refer [reg-event-fx]]))
 
 (def initial-db {:matches []
                  :matches-updater 0
@@ -9,8 +9,3 @@
                  :active-competition ""
                  :active-matchday 1
                  :active-match-details nil})
-
-(rf/reg-event-db
- :init-db
- (fn [_ _]
-   initial-db))
