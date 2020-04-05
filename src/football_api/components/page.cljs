@@ -3,7 +3,6 @@
    [re-frame.core :as rf]
    [football-api.components.select-competition :refer [select-competition]]
    [football-api.components.match-details :refer [match-details]]
-   [football-api.components.pager :refer [pager]]
    [football-api.helpers :refer [styled]]
    ["framer-motion" :rename {AnimatePresence animate-presence}]))
 
@@ -30,5 +29,4 @@
       [:> styled-header
        [:> styled-title (get active-competition :name)]
        [select-competition]]
-      [pager]
       [:div children]]]))

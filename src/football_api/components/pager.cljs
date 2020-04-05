@@ -5,9 +5,7 @@
    [football-api.helpers :refer [styled]]))
 
 (def styled-container (styled :div {:display "flex"
-                                    :justify-content "center"
-                                    :align-items "center"
-                                    :margin-bottom "-40px"}))
+                                    :align-items "center"}))
 
 (def styled-text (styled :div {:font-weight "600"
                                :margin "0 10px"
