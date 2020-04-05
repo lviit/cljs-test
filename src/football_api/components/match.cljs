@@ -10,10 +10,10 @@
                                               :align-items "center"
                                               :padding "0 20px"
                                               :margin "10px 0"
-                                              :background-color "#f7f7f7"
+                                              :background-color "#efefef"
                                               :cursor "pointer"}))
 
-(def styled-score (styled :div {:background-color "#eae8e8"
+(def styled-score (styled :div {:background-color "#e5e5e5"
                                 :padding "10px 15px"
                                 :margin "0 10px"}))
 

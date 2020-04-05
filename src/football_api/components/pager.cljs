@@ -1,6 +1,7 @@
 (ns football-api.components.pager
   (:require
    [re-frame.core :as rf]
+   [football-api.components.chevron :refer [chevron]]
    [football-api.helpers :refer [styled]]))
 
 (def styled-container (styled :div {:display "flex"
@@ -14,10 +15,13 @@
                                :text-transform "uppercase"
                                :font-size "20px"}))
 
-(def styled-button (styled :button {:font-weight "600"
-                                    :padding "5px 10px"
+(def styled-button (styled :button {:display "flex"
+                                    :align-items "center"
+                                    :font-weight "600"
+                                    :padding "3px 10px"
                                     :font-size "14px"
-                                    :background-color "#eae8e8"
+                                    :line-height "24px"
+                                    :background-color "#efefef"
                                     :text-transform "uppercase"
                                     :border "none"
                                     :cursor "pointer"
@@ -30,7 +34,11 @@
                            (get :matchday))]
     [:> styled-container
      [:> styled-button {:on-click #(rf/dispatch [:set-active-matchday (- active-matchday 1)])
-                        :disabled (= active-matchday 1)} "< prev"]
+                        :disabled (= active-matchday 1)}
+      [chevron {:direction :left}]
+      "prev"]
      [:> styled-text (str "gameweek " active-matchday)]
      [:> styled-button {:on-click #(rf/dispatch [:set-active-matchday (+ active-matchday 1)])
-                        :disabled (= active-matchday last-matchday)} "next >"]]))
+                        :disabled (= active-matchday last-matchday)}
+      "next"
+      [chevron {:direction :right}]]]))

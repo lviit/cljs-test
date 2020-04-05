@@ -4,9 +4,9 @@
    [football-api.helpers :refer [styled]]))
 
 (def styled-select (styled :select {:font-size "20px"
-                                    :background-color "#eae8e8"
+                                    :background "#efefef url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgd2lkdGg9IjI0Ij48cGF0aCBkPSJNMTYuNTkgOC41OUwxMiAxMy4xNyA3LjQxIDguNTkgNiAxMGw2IDYgNi02eiIvPjxwYXRoIGQ9Ik0wIDBoMjR2MjRIMHoiIGZpbGw9Im5vbmUiLz48L3N2Zz4=) no-repeat right 5px center"
                                     :appearance "none"
-                                    :padding "5px 10px"
+                                    :padding "5px 30px 5px 10px"
                                     :border "none"
                                     :border-radius 0
                                     :font-family "'Noto Sans', sans-serif"
