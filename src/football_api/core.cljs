@@ -1,5 +1,5 @@
 (ns football-api.core
-  (:require [reagent.core :as r]
+  (:require [reagent.dom :as r]
             [re-frame.core :as rf]
             [football-api.helpers :refer [styled]]
             [football-api.db]
