@@ -1,5 +1,4 @@
-(ns football-api.db
-  (:require [re-frame.core :refer [reg-event-fx]]))
+(ns football-api.db)
 
 (def initial-db {:matches []
                  :matches-updater 0

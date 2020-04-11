@@ -4,7 +4,7 @@
    ["date-fns" :refer [format parseISO]]
    [football-api.helpers :refer [animated styled formatTime formatDate]]))
 
-(def styled-container (styled (animated :li) {:font-size "20px"
+(def styled-container (styled (animated :li) {:font-size "18px"
                                               :font-weight "700"
                                               :display "flex"
                                               :align-items "center"

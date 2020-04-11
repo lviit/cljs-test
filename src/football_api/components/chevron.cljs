@@ -2,7 +2,7 @@
   (:require
    [football-api.helpers :refer [styled]]))
 
-(def styled-chevron (styled :svg {:transform #(case (get (js->clj %) "direction")
+(def styled-chevron (styled :svg {:transform #(case ((js->clj %) "direction")
                                                 "right" "none"
                                                 "left" "rotate(180deg)"
                                                 "none")}))

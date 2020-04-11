@@ -9,13 +9,19 @@
 (def styled-header (styled :div {:display "flex"
                                  :justify-content "space-between"
                                  :align-items "center"
-                                 :text-transform "uppercase"
                                  :margin "20px"}))
 
 (def styled-container (styled :div {:filter #(if (get (js->clj %) "blurred") "blur(10px)" "none")}))
 
-(def styled-title (styled :h1 {:font-size "70px"
+(def styled-title (styled :h1 {:font-size "60px"
                                :margin "0"}))
+
+
+(def styled-text (styled :p {:margin "0"
+                             :font-weight "600"
+                             :font-size "14px"
+                             :text-transform "uppercase"}))
+
 
 (defn page [children]
   (let  [competitions @(rf/subscribe [:competitions])
@@ -27,6 +33,8 @@
       (if match-details-open [match-details active-match-data])]
      [:> styled-container {:blurred match-details-open}
       [:> styled-header
-       [:> styled-title (get active-competition :name)]
+       [:div
+        [:> styled-text "Cljs football api"]
+        [:> styled-title (get active-competition :name)]]
        [select-competition]]
       [:div children]]]))
