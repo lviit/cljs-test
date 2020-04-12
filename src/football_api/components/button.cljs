@@ -6,17 +6,18 @@
 (def styled-button (styled (animated :button) {:display "flex"
                                                :align-items "center"
                                                :font-weight "600"
-                                               :padding "3px 10px"
+                                               :padding "0"
+                                               :margin "0"
                                                :font-size "14px"
                                                :line-height "24px"
-                                               :background-color "#efefef"
-                                               :text-transform "uppercase"
+                                               :background "none"
                                                :border "none"
                                                :cursor "pointer"
-                                               :color "#383838"}))
+                                               :color "white"
+                                               :hover {:border-bottom "2px solid white"}}))
 
 (defn button [{:keys [on-click disabled]} & children]
   [:> styled-button {:while-hover {:scale 1.15}
-                     :while-tap {:scale 0.9}
+                     :while-tap {:scale 0.8}
                      :on-click on-click
                      :disabled disabled} children])

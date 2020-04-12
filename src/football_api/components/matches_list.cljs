@@ -3,7 +3,6 @@
    [re-frame.core :as rf]
    [football-api.helpers :refer [animated styled formatDate]]
    [football-api.components.loading-spinner :refer [loading-spinner]]
-   [football-api.components.pager :refer [pager]]
    [football-api.components.match :refer [match]]
    ["framer-motion" :rename {AnimatePresence animate-presence}]))
 
@@ -13,21 +12,15 @@
 (def styled-title (styled :h2 {:margin "20px 20px 0"
                                :font-size "18px"}))
 
-(def styled-header (styled :h2 {:margin "20px 20px -40px"
-                                :display "flex"
-                                :justify-content "center"
-                                :align-items "center"
-                                :position "relative"}))
+(def styled-container (styled :div {:position "relative"}))
 
 (defn matches-list []
   (let [matches @(rf/subscribe [:matches])
         matches-loading @(rf/subscribe [:matches-loading])
         active-matchday @(rf/subscribe [:active-matchday])]
-    [:div
-     [:> styled-header
-      [pager]
-      [:> animate-presence
-       (if matches-loading [loading-spinner])]]
+    [:styled-container
+     [:> animate-presence
+      (if matches-loading [loading-spinner])]
      (as-> matches m
        (filter #(= (:matchday %) active-matchday) m)
        (group-by #(formatDate (get % :utcDate)) m)

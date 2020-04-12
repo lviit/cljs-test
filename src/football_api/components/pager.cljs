@@ -8,11 +8,8 @@
 (def styled-container (styled :div {:display "flex"
                                     :align-items "center"}))
 
-(def styled-text (styled :div {:font-weight "600"
-                               :margin "0 10px"
-                               :align-items "center"
-                               :text-transform "uppercase"
-                               :font-size "18px"}))
+(def styled-text (styled :div {:align-items "center"
+                               :line-height "24px"}))
 
 (defn pager []
   (let  [active-matchday @(rf/subscribe [:active-matchday])
@@ -22,10 +19,8 @@
     [:> styled-container
      [button {:on-click #(rf/dispatch [:set-active-matchday (- active-matchday 1)])
               :disabled (= active-matchday 1)}
-      [chevron {:direction :left}]
-      "prev"]
+      [chevron {:direction :left}]]
      [:> styled-text (str "gameweek " active-matchday)]
      [button {:on-click #(rf/dispatch [:set-active-matchday (+ active-matchday 1)])
               :disabled (= active-matchday last-matchday)}
-      "next"
       [chevron {:direction :right}]]]))

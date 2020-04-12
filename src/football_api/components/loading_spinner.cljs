@@ -3,9 +3,10 @@
    [football-api.helpers :refer [animated styled]]))
 
 (def styled-container (styled (animated :div) {:position "absolute"
-                                               :right "0"
+                                               :right "20px"
                                                :display "flex"
                                                :font-size "16px"
+                                               :font-weight "600"
                                                :align-items "center"}))
 
 (def styled-spinner (styled (animated :div) {:border-top "5px solid rgba(0, 0, 0, 0.3)"
@@ -27,7 +28,7 @@
                                                           :visible {:opacity 1
                                                                     :x 0
                                                                     :transition {:x {:stiffness 1000}}}}}
-                          "loading..."
+                          "updating..."
                           [:> styled-spinner {:animate {:rotate [0, 360]}
                                               :transition {:duration 1
                                                            :loop js/Infinity}}]])
