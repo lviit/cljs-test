@@ -1,6 +1,7 @@
 (ns football-api.components.loading-spinner
   (:require
-   [football-api.helpers :refer [animated styled]]))
+   [football-api.helpers :refer [animated styled formatTimeFull]]
+   ["framer-motion" :rename {AnimatePresence animate-presence}]))
 
 (def styled-container (styled (animated :div) {:position "absolute"
                                                :right "20px"
@@ -18,17 +19,25 @@
                                              :height "10px"
                                              :margin-left "5px"}))
 
-(defn loading-spinner [] [:> styled-container {:key "loading-indicator"
-                                               :initial :hidden
-                                               :animate :visible
-                                               :exit :hidden
-                                               :variants {:hidden {:opacity 0
-                                                                   :x 50
-                                                                   :transition {:x {:stiffness 1000}}}
-                                                          :visible {:opacity 1
-                                                                    :x 0
-                                                                    :transition {:x {:stiffness 1000}}}}}
-                          "updating..."
-                          [:> styled-spinner {:animate {:rotate [0, 360]}
-                                              :transition {:duration 1
-                                                           :loop js/Infinity}}]])
+(def motion-props {:initial :hidden
+                   :animate :visible
+                   :exit :hidden
+                   :variants {:hidden {:opacity 0
+                                       :x 50
+                                       :transition {:x {:stiffness 1000}}}
+                              :visible {:opacity 1
+                                        :x 0
+                                        :transition {:delay 0.5
+                                                     :x {:stiffness 1000}}}}})
+
+(defn loading-spinner [{:keys [last-updated loading]}]
+  [:> animate-presence
+   (if loading
+     [:> styled-container (merge motion-props {:key "loading-indicator"})
+      "updating..."
+      [:> styled-spinner {:animate {:rotate [0, 360]}
+                          :transition {:duration 1
+                                       :loop js/Infinity}}]]
+     (if last-updated
+       [:> styled-container (merge motion-props {:key "last-updated"})
+        (str "Last updated: " (formatTimeFull last-updated))]))])

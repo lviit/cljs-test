@@ -3,8 +3,7 @@
    [re-frame.core :as rf]
    [football-api.helpers :refer [animated styled formatDate]]
    [football-api.components.loading-spinner :refer [loading-spinner]]
-   [football-api.components.match :refer [match]]
-   ["framer-motion" :rename {AnimatePresence animate-presence}]))
+   [football-api.components.match :refer [match]]))
 
 (def styled-ul (styled (animated :ul) {:list-style-type "none"
                                        :padding 0}))
@@ -17,10 +16,11 @@
 (defn matches-list []
   (let [matches @(rf/subscribe [:matches])
         matches-loading @(rf/subscribe [:matches-loading])
+        matches-last-updated @(rf/subscribe [:matches-last-updated])
         active-matchday @(rf/subscribe [:active-matchday])]
-    [:styled-container
-     [:> animate-presence
-      (if matches-loading [loading-spinner])]
+    [:> styled-container
+     [loading-spinner {:last-updated matches-last-updated
+                       :loading matches-loading}]
      (as-> matches m
        (filter #(= (:matchday %) active-matchday) m)
        (group-by #(formatDate (get % :utcDate)) m)

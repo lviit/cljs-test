@@ -3,6 +3,7 @@
    [ajax.core :as ajax]
    [day8.re-frame.http-fx]
    [football-api.db :refer [initial-db]]
+   [football-api.helpers :refer [currentTime]]
    [re-frame.core :refer [reg-event-fx reg-event-db reg-fx dispatch]]))
 
 ;; read from env variable FOOTBALL_API_AUTH_TOKEN
@@ -33,6 +34,7 @@
  (fn [db [_ response]]
    (-> db
        (assoc :matches-loading false)
+       (assoc :matches-last-updated (currentTime))
        (assoc :matches ((js->clj response) :matches)))))
 
 (reg-event-fx

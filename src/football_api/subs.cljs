@@ -12,6 +12,11 @@
    (db :matches-loading)))
 
 (reg-sub
+ :matches-last-updated
+ (fn [db _]
+   (db :matches-last-updated)))
+
+(reg-sub
  :competitions
  (fn [db _]
    (db :competitions)))
