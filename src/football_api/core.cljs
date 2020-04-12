@@ -6,13 +6,16 @@
             [football-api.subs]
             [football-api.events]
             [football-api.components.matches-list :refer [matches-list]]
-            [football-api.components.page :refer [page]]))
+            [football-api.components.page :refer [page]]
+            ["styled-normalize" :rename {Normalize normalize}]))
 
 (def styled-app (styled :div {:font-family "'Noto Sans', sans-serif"
-                              :color "#383838"}))
+                              :color "#383838"
+                              :background-color "#f2efef"}))
 
 (defn app []
   [:> styled-app
+   [:> normalize]
    [page
     [matches-list]]])
 

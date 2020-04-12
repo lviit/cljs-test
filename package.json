@@ -18,7 +18,8 @@
     "framer-motion": "^1.10.3",
     "react": "16.13.0",
     "react-dom": "16.13.0",
-    "styled-components": "^5.0.1"
+    "styled-components": "^5.0.1",
+    "styled-normalize": "^8.0.7"
   },
   "devDependencies": {
     "react-highlight.js": "^1.0.7",
