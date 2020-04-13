@@ -27,7 +27,7 @@
                                        :transition {:x {:stiffness 1000}}}
                               :visible {:opacity 1
                                         :x 0
-                                        :transition {:delay 0.5
+                                        :transition {:delay 0.3
                                                      :x {:stiffness 1000}}}}})
 
 (defn loading-spinner [{:keys [last-updated loading]}]

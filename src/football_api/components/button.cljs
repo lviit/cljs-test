@@ -14,7 +14,7 @@
                                                :border "none"
                                                :cursor "pointer"
                                                :color "white"
-                                               :hover {:border-bottom "2px solid white"}}))
+                                               :outline "none"}))
 
 (defn button [{:keys [on-click disabled]} & children]
   [:> styled-button {:while-hover {:scale 1.15}

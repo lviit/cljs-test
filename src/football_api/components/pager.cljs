@@ -15,7 +15,7 @@
   (let  [active-matchday @(rf/subscribe [:active-matchday])
          last-matchday (-> @(rf/subscribe [:matches])
                            last
-                           (get :matchday))]
+                           :matchday)]
     [:> styled-container
      [button {:on-click #(rf/dispatch [:set-active-matchday (- active-matchday 1)])
               :disabled (= active-matchday 1)}
