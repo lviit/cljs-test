@@ -2,7 +2,7 @@
   (:require
    [re-frame.core :as rf]
    ["date-fns" :refer [format parseISO]]
-   [football-api.helpers :refer [animated styled formatTime formatDate]]))
+   [football-api.helpers :refer [animated styled formatTime formatDate styled-theme-color]]))
 
 (def styled-container (styled (animated :li) {:font-size "18px"
                                               :font-weight "700"
@@ -10,10 +10,10 @@
                                               :align-items "center"
                                               :padding "0 20px"
                                               :margin "10px 0"
-                                              :background "#e2dede"
+                                              :background #(styled-theme-color % :gray5)
                                               :cursor "pointer"}))
 
-(def styled-score (styled :div {:background-color "#dbd9d9"
+(def styled-score (styled :div {:background-color #(styled-theme-color % :gray4)
                                 :padding "10px 15px"
                                 :margin "0 10px"}))
 

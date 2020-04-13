@@ -5,6 +5,8 @@
             ["framer-motion" :refer [motion]]))
 
 (defn styled [element styles] ((styled-components (if (keyword? element) (name element) element)) (clj->js styles)))
+(defn styled-theme-color [props key] (get-in (js->clj props) ["theme" "colors" (name key)]))
+(defn styled-props [props key] ((js->clj props) (name key)))
 
 (defn animated [element] (obj/get motion (name element)))
 
