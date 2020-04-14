@@ -1,7 +1,7 @@
 (ns football-api.components.header
   (:require
    [re-frame.core :as rf]
-   [football-api.components.select-competition :refer [select-competition]]
+   [football-api.components.competition-switcher.select :refer [select-competition]]
    [football-api.components.pager :refer [pager]]
    [football-api.helpers :refer [styled styled-theme-color]]))
 
