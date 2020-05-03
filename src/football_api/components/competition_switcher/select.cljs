@@ -51,7 +51,8 @@
          get-item-props :getItemProps} (-> {:items competitions
                                             :onSelectedItemChange #(rf/dispatch
                                                                     [:set-active-competition
-                                                                     (get-in (js->clj %) ["selectedItem" "code"])])}
+                                                                     (get-in (js->clj % :keywordize-keys true)
+                                                                             [:selectedItem :code])])}
                                            clj->js
                                            use-select
                                            (js->clj :keywordize-keys true))]

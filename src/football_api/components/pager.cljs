@@ -19,8 +19,10 @@
     [:> styled-container
      [button {:on-click #(rf/dispatch [:set-active-matchday (- active-matchday 1)])
               :disabled (= active-matchday 1)}
-      [chevron {:direction :left}]]
+      [chevron {:direction :left
+                :key :left}]]
      [:> styled-text (str "gameweek " active-matchday)]
      [button {:on-click #(rf/dispatch [:set-active-matchday (+ active-matchday 1)])
               :disabled (= active-matchday last-matchday)}
-      [chevron {:direction :right}]]]))
+      [chevron {:direction :right
+                :key :right}]]]))
