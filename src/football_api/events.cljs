@@ -31,18 +31,18 @@
 
 (reg-event-db
  :get-matches-success
- (fn [db [_ response]]
+ (fn [db [_ competition response]]
    (-> db
        (assoc :matches-loading false)
        (assoc :matches-last-updated (currentTime))
-       (assoc :matches ((js->clj response) :matches)))))
+       (assoc-in [:matches competition] ((js->clj response) :matches)))))
 
 (reg-event-fx
  :get-matches
  (fn [{:keys [db]} [_ competition]]
    {:db  (assoc db :matches-loading true)
     :http-xhrio (merge default-req-options {:uri        (str api-base-url "competitions/" competition "/matches")
-                                            :on-success [:get-matches-success]
+                                            :on-success [:get-matches-success competition]
                                             :on-failure [:get-matches-failure]})}))
 
 (reg-event-db

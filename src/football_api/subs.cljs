@@ -4,7 +4,7 @@
 (reg-sub
  :matches
  (fn [db _]
-   (db :matches)))
+   (get-in db [:matches (db :active-competition)])))
 
 (reg-sub
  :matches-loading
@@ -46,6 +46,6 @@
 (reg-sub
  :active-match-data
  (fn [db _]
-   (->> (db :matches)
+   (->> (get-in db [:matches (db :active-competition)])
         (filter #(= (:id %) (db :active-match-details)))
         first)))
